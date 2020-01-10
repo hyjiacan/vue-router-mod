@@ -1,21 +1,70 @@
-# vue-router [![Build Status](https://img.shields.io/circleci/project/github/vuejs/vue-router/dev.svg)](https://circleci.com/gh/vuejs/vue-router)
+# vue-router-mod
 
-> This is vue-router 3.0 which works only with Vue 2.0. For the 1.x router see the [1.0 branch](https://github.com/vuejs/vue-router/tree/1.0).
+This is a **MOD** version based on vue-router [3.1.3](https://github.com/vuejs/vue-router/releases/tag/v3.1.3).
 
 ### Introduction
 
-`vue-router` is the official router for [Vue.js](http://vuejs.org). It deeply integrates with Vue.js core to make building Single Page Applications with Vue.js a breeze. Features include:
+`vue-router-mod` provides extra apis to replace/remove route dynamically.
 
-- Nested route/view mapping
-- Modular, component-based router configuration
-- Route params, query, wildcards
-- View transition effects powered by Vue.js' transition system
-- Fine-grained navigation control
-- Links with automatic active CSS classes
-- HTML5 history mode or hash mode, with auto-fallback in IE9
-- Customizable Scroll Behavior
+### Install
 
-Get started with the [documentation](http://router.vuejs.org), or play with the [examples](https://github.com/vuejs/vue-router/tree/dev/examples) (see how to run them below).
+```shell script
+npm install @hyjiacan/vue-router-mod --save
+# or
+yarn add @hyjiacan/vue-router-mod
+```
+
+You **should not** install package `vue-router` if you install this.
+
+### Usage
+
+### router.removeRoute
+
+Signature：
+
+```js
+router.removeRoute(location: string)
+```
+
+Dynamically remove route from router (and the children).  The argument must be a valid `path`。
+
+Sample:
+
+```js
+const router = new Router({
+  routes: [{
+    path: '/a',
+    component: {name: 'A'}, 
+    children: [{
+      path: '/a/b',
+      component: {name: 'B'},
+    }]
+  }, {
+    path: '/a/c',
+    component: {name: 'C'}
+  }]
+})
+
+router.removeRoute('/a')
+```
+
+Now, route `/a` and its child `/a/b` was removed.
+ 
+> Keep in mind, route `/a/c` is still available.
+
+### router.replaceRoutes
+
+Signature：
+
+```js
+router.replaceRoutes(routes: Array<RouteConfig> | RouteConfig)
+```
+
+Dynamically replace routes from router. The argument must be an Array/Object using the same route config format with the `routes` constructor option.
+
+### Related issue
+
+- https://github.com/vuejs/vue-router/issues/3087
 
 ### Development Setup
 
@@ -47,36 +96,10 @@ npm run docs
   - Push tags `git push origin refs/tags/v$VERSION && git push`
   - Publish to npm `npm publish`
 
-## Questions
-
-For questions and support please use the [Discord chat server](https://chat.vuejs.org) or [the official forum](http://forum.vuejs.org). The issue list of this repo is **exclusively** for bug reports and feature requests.
-
-## Issues
-
-Please make sure to read the [Issue Reporting Checklist](https://github.com/vuejs/vue/blob/dev/.github/CONTRIBUTING.md#issue-reporting-guidelines) before opening an issue. Issues not conforming to the guidelines may be closed immediately.
-
-## Contribution
-
-Please make sure to read the [Contributing Guide](https://github.com/vuejs/vue/blob/dev/.github/CONTRIBUTING.md) before making a pull request.
-
-## Changelog
-
-Details changes for each release are documented in the [release notes](https://github.com/vuejs/vue-router/releases).
-
-## Stay In Touch
-
-- For latest releases and announcements, follow on Twitter: [@vuejs](https://twitter.com/vuejs)
-
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
 
-Copyright (c) 2013-present Evan You
+## Thanks
 
-## Special Thanks
-
-<a href="https://www.browserstack.com">
-  <img src="/assets/browserstack-logo-600x315.png" height="80" title="BrowserStack Logo" alt="BrowserStack Logo" />
-</a>
-
-Special thanks to [BrowserStack](https://www.browserstack.com) for letting the maintainers use their service to debug browser specific issues.
+Thanks to Evan-You who makes such a amazing framework.

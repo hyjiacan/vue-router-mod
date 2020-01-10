@@ -42,6 +42,8 @@ export declare class VueRouter {
   onReady(cb: Function, errorCb?: ErrorHandler): void
   onError(cb: ErrorHandler): void
   addRoutes(routes: RouteConfig[]): void
+  removeRoutes(location: string): void
+  replaceRoutes(routes: RouteConfig|RouteConfig[]): void
   resolve(
     to: RawLocation,
     current?: Route,

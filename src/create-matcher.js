@@ -7,10 +7,14 @@ import { createRoute } from './util/route'
 import { fillParams } from './util/params'
 import { createRouteMap } from './create-route-map'
 import { normalizeLocation } from './util/location'
+import { removeRouteMap } from './remove-route-map'
+import { replaceRouteMap } from './replace-route-map'
 
 export type Matcher = {
   match: (raw: RawLocation, current?: Route, redirectedFrom?: Location) => Route;
   addRoutes: (routes: Array<RouteConfig>) => void;
+  removeRoute: (location: string) => void;
+  replaceRoutes: (routes: Array<RouteConfig>) => void;
 };
 
 export function createMatcher (
@@ -21,6 +25,14 @@ export function createMatcher (
 
   function addRoutes (routes) {
     createRouteMap(routes, pathList, pathMap, nameMap)
+  }
+
+  function removeRoute (location) {
+    removeRouteMap(location, pathList, pathMap, nameMap)
+  }
+
+  function replaceRoutes (routes) {
+    replaceRouteMap(routes, pathList, pathMap, nameMap)
   }
 
   function match (
@@ -166,7 +178,9 @@ export function createMatcher (
 
   return {
     match,
-    addRoutes
+    addRoutes,
+    removeRoute,
+    replaceRoutes
   }
 }
 
